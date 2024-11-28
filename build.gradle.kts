@@ -11,6 +11,16 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    // https://mvnrepository.com/artifact/xmlrpc-helma/xmlrpc-helma
+    implementation("xmlrpc-helma:xmlrpc-helma:1.0")
+    // https://mvnrepository.com/artifact/xerces/xercesImpl
+    implementation("xerces:xercesImpl:2.6.2")
+
+    //https://kotlin.github.io/kotlinx-rpc/get-started.html#configure-the-repositories
+    implementation("org.jetbrains.kotlinx:kotlinx-rpc-krpc-client:0.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-rpc-krpc-server:0.4.0")
+
+
 }
 
 tasks.test {
