@@ -1,6 +1,9 @@
 package org.example
 
-import helma.xmlrpc.WebServer
+import org.apache.xmlrpc.server.PropertyHandlerMapping
+import org.apache.xmlrpc.server.XmlRpcServer
+import org.apache.xmlrpc.server.XmlRpcServerConfigImpl
+import org.apache.xmlrpc.webserver.WebServer
 import org.example.Models.KotlinServer
 
 
@@ -8,16 +11,27 @@ private val POSITION_KEYS = listOf("x", "y", "z", "rx", "ry", "rz")
 
 fun main() {
     try {
+        // Creating the server
         println("Attempting to start XML-RPC Server...")
-
         val port = 30001
-        val server: WebServer = WebServer(port)
-        server.addHandler("hello", randomPose())
+        val webServer: WebServer = WebServer(port)
 
-        server.start()
+        // Adding the handler
+        val phm: PropertyHandlerMapping = PropertyHandlerMapping()
+        phm.addHandler("MyServer", KotlinServer::class.java)
+
+        // Convert it in a xml rpc server
+        val xmlRpcServer: XmlRpcServer = webServer.getXmlRpcServer()
+        xmlRpcServer.setHandlerMapping(phm)
+
+        // Adding configuration to work
+        val serverConfig: XmlRpcServerConfigImpl = (xmlRpcServer.config as XmlRpcServerConfigImpl)
+        serverConfig.setEnabledForExtensions(true)
+        serverConfig.setContentLengthOptional(false)
+
+        webServer.start()
 
         println("Started successfully.")
-        println("Accepting requests. (Halt program to stop.)")
     } catch (e: Exception) {
         println(e.message)
     }

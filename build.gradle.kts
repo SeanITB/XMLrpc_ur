@@ -20,6 +20,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-rpc-krpc-client:0.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-rpc-krpc-server:0.4.0")
 
+    //apache
+    implementation("org.apache.xmlrpc:xmlrpc-server:3.1.3")
 
 }
 
